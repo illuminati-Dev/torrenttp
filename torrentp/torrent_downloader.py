@@ -27,7 +27,7 @@ class TorrentDownloader:
                                           save_path=self._save_path, libtorrent=None, is_magnet=False)
 
         self._file = self._downloader
-        self._file.download()
+        return self._file.download()
 
     def __str__(self):
         pass
