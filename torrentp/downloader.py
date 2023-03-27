@@ -42,8 +42,8 @@ class Downloader:
 
             sys.stdout.flush()
             time.sleep(1)
-
-        print(self._status.name, 'downloaded successfully.')
+        print(f'Successfully Downloaded {self._status.name}')
+        return self._status.name
 
     def __str__(self):
         pass
