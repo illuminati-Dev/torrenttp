@@ -2,9 +2,10 @@ class TorrentInfo:
     def __init__(self, path, libtorrent):
         self._path = path
         self._lt = libtorrent
-        self._info = self._lt.torrent_info(self._path)
+        self._info = self.create_torrent_info()
 
     def show_info(self):
+        # You can implement a method to display information about the torrent here.
         pass
 
     def create_torrent_info(self):
@@ -12,10 +13,10 @@ class TorrentInfo:
         return self._info
 
     def __str__(self):
-        pass
+        return f"TorrentInfo(path='{self._path}')"
 
     def __repr__(self):
-        pass
-    
+        return self.__str__()
+
     def __call__(self):
         return self.create_torrent_info()
