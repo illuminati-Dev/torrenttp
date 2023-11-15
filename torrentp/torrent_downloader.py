@@ -18,6 +18,15 @@ class TorrentDownloader:
         if self._file_path.startswith('magnet:'):
             self._add_torrent_params = self._lt.parse_magnet_uri(self._file_path)
             self._add_torrent_params.save_path = self._save_path
+            self._add_torrent_params.flags |= lt.torrent_flags.auto_managed
+            self._add_torrent_params.flags |= lt.torrent_flags.duplicate_is_error
+            self._add_torrent_params.flags |= lt.torrent_flags.enable_undecoded_pieces
+            self._add_torrent_params.flags |= lt.torrent_flags.prioritize_partial_pieces
+
+            # Enable DHT and PEX for magnet links
+            self._add_torrent_params.flags |= lt.torrent_flags.enable_dht
+            self._add_torrent_params.flags |= lt.torrent_flags.enable_peer_exchange
+
             self._downloader = Downloader(session=self._session, torrent_info=self._add_torrent_params,
                                           save_path=self._save_path, libtorrent=lt, is_magnet=True)
         else:
