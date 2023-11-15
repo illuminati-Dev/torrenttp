@@ -11,7 +11,7 @@ from .session import Session
 __version__ = "0.1.6"
 __author__ = 'Nima Akbarzade'
 __author_email__ = "iw4p@protonmail.com"
-__license__ = "BSD 3-clause"
+__license__ = "BSD 2-clause"
 __url__ = "https://github.com/iw4p/torrentp"
 
 PYPI_SIMPLE_ENDPOINT: str = "https://pypi.org/project/torrentp"
