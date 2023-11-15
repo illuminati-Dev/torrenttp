@@ -9,6 +9,9 @@ class Session:
         self._upload_rate_limit = 0  # Fixed variable name
         self._lt = libtorrent
 
+        # Call create_session in the constructor to create the session when an object is instantiated
+        self._session = self.create_session()
+
     def create_session(self):
         settings = {
             'listen_interfaces': f'{self._listen_interfaces}:{self._port}',
@@ -25,4 +28,4 @@ class Session:
         return self.__str__()
 
     def __call__(self):
-        return self.create_session()
+        return self._session
