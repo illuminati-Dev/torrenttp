@@ -20,7 +20,6 @@ class TorrentDownloader:
             self._add_torrent_params.save_path = self._save_path
             self._add_torrent_params.flags |= lt.torrent_flags.auto_managed
             self._add_torrent_params.flags |= lt.torrent_flags.duplicate_is_error
-            self._add_torrent_params.flags |= lt.torrent_flags.enable_undecoded_pieces
             self._add_torrent_params.flags |= lt.torrent_flags.prioritize_partial_pieces
 
             # Enable DHT and PEX for magnet links
