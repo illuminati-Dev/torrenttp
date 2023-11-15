@@ -23,18 +23,19 @@ class Downloader:
 
     def download(self):
         try:
-            print(f'Start downloading {self.name}')
+            logging.info(f'Start downloading {self.name}')
             while not self._file.status().is_seeding:
                 s = self.status()
 
-                print('\r%.2f%% complete (down: %.1f kB/s up: %.1f kB/s peers: %d) %s' % (
+                progress_message = '\r%.2f%% complete (down: %.1f kB/s up: %.1f kB/s peers: %d) %s' % (
                     s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000,
-                    s.num_peers, s.state), end=' ')
+                    s.num_peers, s.state)
 
+                logging.info(progress_message)
                 sys.stdout.flush()
                 time.sleep(1)
-                
-            print(f'Successfully Downloaded {self.name}')
+
+            logging.info(f'Successfully Downloaded {self.name}')
             return self.name
         except Exception as e:
             logging.error(f"Error downloading {self.name}: {e}")
@@ -51,4 +52,4 @@ class Downloader:
         return self.__str__()
 
     def __call__(self):
-        pass  
+        pass  # Add your logic for the __call__ method if needed
