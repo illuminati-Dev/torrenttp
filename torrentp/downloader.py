@@ -1,5 +1,6 @@
 import sys
 import time
+import logging
 
 class Downloader:
     def __init__(self, session, torrent_info, save_path, libtorrent, is_magnet):
@@ -21,18 +22,23 @@ class Downloader:
         return self._file.status()
 
     def download(self):
-        print(f'Start downloading {self.name}')
-        while not self._file.status().is_seeding:
-            s = self.status()
+        try:
+            print(f'Start downloading {self.name}')
+            while not self._file.status().is_seeding:
+                s = self.status()
 
-            print('\r%.2f%% complete (down: %.1f kB/s up: %.1f kB/s peers: %d) %s' % (
-                s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000,
-                s.num_peers, s.state), end=' ')
+                print('\r%.2f%% complete (down: %.1f kB/s up: %.1f kB/s peers: %d) %s' % (
+                    s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000,
+                    s.num_peers, s.state), end=' ')
 
-            sys.stdout.flush()
-            time.sleep(1)
-        print(f'Successfully Downloaded {self.name}')
-        return self.name
+                sys.stdout.flush()
+                time.sleep(1)
+                
+            print(f'Successfully Downloaded {self.name}')
+            return self.name
+        except Exception as e:
+            logging.error(f"Error downloading {self.name}: {e}")
+            raise
 
     @property
     def name(self):
@@ -45,5 +51,4 @@ class Downloader:
         return self.__str__()
 
     def __call__(self):
-        # You can define what you want the instance to do when called here.
-        pass  # Add your logic for the __call__ method if needed
+        pass  
