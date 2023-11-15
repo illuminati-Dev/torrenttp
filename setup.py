@@ -1,10 +1,10 @@
 import os.path
 import pathlib
 import re
-
 from setuptools import setup
 
 PROJECT_NAME = 'torrentp'
+
 # The directory containing this file
 HERE = pathlib.Path(__file__).parent
 
@@ -28,15 +28,16 @@ setup(
     license=get_property('__license__'),
     packages=['torrentp'],
     install_requires=['libtorrent>=2.0.7'],
+    python_requires='>=3.7',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',  # Remove specific OS
-        'Programming Language :: Python :: 3',  # Focus on Python 3
+        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
     ],
+    include_package_data=True,  # Include non-code files
 )
