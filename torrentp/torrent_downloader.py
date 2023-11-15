@@ -3,6 +3,7 @@ from .torrent_info import TorrentInfo
 from .downloader import Downloader
 import libtorrent as lt
 
+
 class TorrentDownloader:
     def __init__(self, file_path, save_path):
         self._file_path = file_path
@@ -14,36 +15,29 @@ class TorrentDownloader:
         self._add_torrent_params = None
         self._session = Session(self._lt)
 
-    def start_download(self):
+    def start_download(self, download_speed=0, upload_speed=0):
         if self._file_path.startswith('magnet:'):
             self._add_torrent_params = self._lt.parse_magnet_uri(self._file_path)
             self._add_torrent_params.save_path = self._save_path
-
-            # Check if the attribute exists before using it
-            if hasattr(lt.torrent_flags, 'enable_undecoded_pieces'):
-                self._add_torrent_params.flags |= lt.torrent_flags.enable_undecoded_pieces
-
-            # Enable DHT and PEX for magnet links
-            self._add_torrent_params.flags |= lt.torrent_flags.enable_dht
-            self._add_torrent_params.flags |= lt.torrent_flags.enable_peer_exchange
-
-            self._downloader = Downloader(session=self._session, torrent_info=self._add_torrent_params,
+            self._downloader = Downloader(session=self._session(), torrent_info=self._add_torrent_params,
                                           save_path=self._save_path, libtorrent=lt, is_magnet=True)
+
         else:
             self._torrent_info = TorrentInfo(self._file_path, self._lt)
-            self._downloader = Downloader(session=self._session, torrent_info=self._torrent_info,
+            self._downloader = Downloader(session=self._session(), torrent_info=self._torrent_info(),
                                           save_path=self._save_path, libtorrent=None, is_magnet=False)
 
+        self._session.set_download_limit(download_speed)
+        self._session.set_upload_limit(upload_speed)
+
         self._file = self._downloader
-        return self._file.download()
+        self._file.download()
 
     def __str__(self):
-        return f"TorrentDownloader(file_path={self._file_path}, save_path={self._save_path})"
+        pass
 
     def __repr__(self):
-        return self.__str__()
+        pass
 
-    def __call__(self, *args, **kwargs):
-        # Add your custom logic here
-        print("TorrentDownloader instance called!")
-        # You can perform any custom actions or return a specific value
+    def __call__(self):
+        pass
