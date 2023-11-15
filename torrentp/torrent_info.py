@@ -1,3 +1,5 @@
+import libtorrent as lt
+
 class TorrentInfo:
     def __init__(self, path, libtorrent):
         self._path = path
@@ -9,8 +11,7 @@ class TorrentInfo:
         pass
 
     def create_torrent_info(self):
-        self._info = self._lt.torrent_info(self._path)
-        return self._info
+        return self._lt.torrent_info(self._path)
 
     def __str__(self):
         return f"TorrentInfo(path='{self._path}')"
