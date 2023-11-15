@@ -18,9 +18,10 @@ class TorrentDownloader:
         if self._file_path.startswith('magnet:'):
             self._add_torrent_params = self._lt.parse_magnet_uri(self._file_path)
             self._add_torrent_params.save_path = self._save_path
-            self._add_torrent_params.flags |= lt.torrent_flags.auto_managed
-            self._add_torrent_params.flags |= lt.torrent_flags.duplicate_is_error
-            self._add_torrent_params.flags |= lt.torrent_flags.prioritize_partial_pieces
+
+            # Check if the attribute exists before using it
+            if hasattr(lt.torrent_flags, 'enable_undecoded_pieces'):
+                self._add_torrent_params.flags |= lt.torrent_flags.enable_undecoded_pieces
 
             # Enable DHT and PEX for magnet links
             self._add_torrent_params.flags |= lt.torrent_flags.enable_dht
@@ -42,6 +43,7 @@ class TorrentDownloader:
     def __repr__(self):
         return self.__str__()
 
-    def __call__(self):
-        # You can define what you want the instance to do when called here.
-        pass  # Add your logic for the __call__ method if needed
+    def __call__(self, *args, **kwargs):
+        # Add your custom logic here
+        print("TorrentDownloader instance called!")
+        # You can perform any custom actions or return a specific value
